@@ -13,7 +13,6 @@ def connect(config):
 
         connection, address = serversocket.accept()
         connection.settimeout(config.timeout)
-        print(address)
 
         buffer = connection.recv(io.DEFAULT_BUFFER_SIZE)
 

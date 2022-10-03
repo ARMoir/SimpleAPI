@@ -13,6 +13,14 @@ def get(reponse):
     finally:
         return get
 
+def list():
+    endpoint = []
+    endpoint.append('time')
+    endpoint.append('insert')
+    endpoint.append('query')
+
+    return endpoint
+
 def check(config, response, request):
     output = request
 
@@ -23,7 +31,7 @@ def check(config, response, request):
             print(items)
 
         if items[1] == '':
-            output = default(config, response)
+            output = default(config, list(), response)
 
         if items[1] == 'time':
             output = time(request) 
@@ -34,11 +42,15 @@ def check(config, response, request):
     finally:
       return output
 
-def default(config, response):
+def default(config, api, response):
 
     output = 'Created by: Alex Moir <br>'
     output += 'Email: Alex@Moir.pw <br>'
-    output += 'API: http://{0}/api/ <br>'.format(config.data['Host'])
+    output += '<br>'
+
+    for endpoint in api:
+        output += '<a href="http://{0}/{1}">http://{0}/{1}<a><br>'.format(config.data['Host'], endpoint)
+    
     output += '<br>'
     output += '{0} <br>'.format(response)
 

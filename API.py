@@ -11,8 +11,8 @@ def run(data):
         buffer = server.connect(config)
         response = server.response(config, buffer)
         request = endpoints.get(response)
-        out = endpoints.check(config, response, request)      
-        send.output(config, out)        
+        output = endpoints.check(config, response, request)      
+        send.output(config, output)        
 
 if __name__ == '__main__':
 
