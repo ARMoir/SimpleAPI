@@ -23,6 +23,7 @@
   <ItemGroup>
     <Compile Include="API.py" />
     <Compile Include="configuration.py" />
+    <Compile Include="database.py" />
     <Compile Include="endpoints.py" />
     <Compile Include="send.py" />
     <Compile Include="server.py" />

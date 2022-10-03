@@ -1,6 +1,3 @@
-
-
-
 def format(get):
     output = 'HTTP/1.0 200 OK\r\n'
     output += 'Content-Length: {0}\r\n'.format(len(str(get)))
