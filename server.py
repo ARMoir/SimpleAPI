@@ -7,7 +7,7 @@ def connect(config):
 
         serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         serversocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        serversocket.bind(('0.0.0.0', config.port))
+        serversocket.bind((config.ip, config.port))
         serversocket.listen(0)
 
 
