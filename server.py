@@ -32,7 +32,7 @@ def connect(config):
             
 def response(config, buffer):
 
-    if len(buffer) > 0:
+    if buffer:
         response = buffer.decode('utf-8', errors='ignore')
         response = response.split('\r\n')  
 

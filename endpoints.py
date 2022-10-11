@@ -1,5 +1,6 @@
 import datetime
 import database
+import json
 
 def get(reponse):
 
@@ -64,15 +65,20 @@ def default(config, api, response):
 
 def time(items):
     print(items)
-    now = str(datetime.datetime.now())
-    print(now)
+    
+    time = {}
+    time['time'] = str(datetime.datetime.now())
+    time = json.dumps(time)
 
-    return now
+    print(time)
+
+    return time
 
 def insert(config, items):
     items = database.sanitize(items)
-    print(items)
     output = database.create(config)
+
+    print(items)
 
     if len(items) < 4:
         output = 'Please provide the key and value to insert <br> http://{0}/insert/{{key}}/{{value}}'.format(config.data['Host'])
@@ -86,13 +92,15 @@ def insert(config, items):
 
 def query(config, items):
     items = database.sanitize(items)
-    print(items)
     output = database.create(config)
+
+    print(items)
 
     if len(items) < 3:
         output = 'Please provide the key value to query <br> http://{0}/insert/{{key}}'.format(config.data['Host'])
 
     else:
         output = database.get(config.database, "SELECT [{0}] FROM [{1}] WHERE [{2}] = '{3}' ORDER BY [{4}] DESC".format('value', 'values', 'key', items[2], 'time'))
+        output = json.dumps(output)
 
     return output
