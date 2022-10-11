@@ -34,4 +34,12 @@ def create(config):
     status = set(config.database, create)
 
     return status
+
+def sanitize(items):
+
+    for item in items:
+            if "'" in item:
+                items[items.index(item)] = item.replace("'", "''")
+
+    return items
         

@@ -70,6 +70,7 @@ def time(items):
     return now
 
 def insert(config, items):
+    items = database.sanitize(items)
     print(items)
     output = database.create(config)
 
@@ -84,6 +85,7 @@ def insert(config, items):
     return output
 
 def query(config, items):
+    items = database.sanitize(items)
     print(items)
     output = database.create(config)
 

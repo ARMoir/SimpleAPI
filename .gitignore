@@ -363,5 +363,7 @@ MigrationBackup/
 FodyWeavers.xsd
 
 *.db
-.vs\API\*\*
+.vs/API/*
+.vs/API/*/*
+.vs/API/*/*/*
 .vs/API/v16/.suo
