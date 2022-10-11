@@ -17,11 +17,13 @@ def run(data):
 
 if __name__ == '__main__':
 
+    ip = '0.0.0.0'
     port = 1337
     timeout = 1
     database = 'values'
  
     config = []
+    config.append(ip)
     config.append(port)
     config.append(timeout)
     config.append(database)
