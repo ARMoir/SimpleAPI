@@ -15,7 +15,7 @@ def get(reponse):
     finally:
         return get
 
-def list():
+def urls():
     endpoint = []
     endpoint.append('time')
     endpoint.append('insert')
@@ -32,7 +32,7 @@ def check(config, response, request):
             items = request.split('/')
 
             if items[1] == '':
-                output = default(config, list(), response)
+                output = default(config, urls(), response)
 
             if items[1] == 'time':
                 output = time(items) 
@@ -65,7 +65,7 @@ def default(config, api, response):
 
 def time(items):   
     time = {}
-    time['time'] = str(datetime.datetime.now())
+    time['timestamp'] = str(datetime.datetime.now())
     time = json.dumps(time)
 
     return time
@@ -93,6 +93,8 @@ def query(config, items):
 
     else:
         output = database.get(config.database, "SELECT [{0}] FROM [{1}] WHERE [{2}] = '{3}' ORDER BY [{4}] DESC".format('value', 'values', 'key', items[2], 'time'))
-        output = json.dumps(output)
+        values = {}
+        values[items[2]] = list(sum(output, ()))
+        output = json.dumps(values)
 
     return output
