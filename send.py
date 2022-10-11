@@ -9,3 +9,11 @@ def format(get):
 def output(config, out):
     out = format(out)
     config.connection.sendall(str.encode(out))
+
+def block():
+    item = []
+    item.append(None)
+    item.append('')
+    item.append('/favicon.ico')
+
+    return item

@@ -1,4 +1,5 @@
 import os
+import datetime
 import server
 import configuration
 import endpoints
@@ -12,8 +13,14 @@ def run(data):
         buffer = server.connect(config)
         response = server.response(config, buffer)
         request = endpoints.get(response)
-        output = endpoints.check(config, response, request)      
-        send.output(config, output)        
+        output = endpoints.check(config, response, request)  
+        send.output(config, output) 
+        
+        if output not in send.block():
+            print('\n')
+            print(str(datetime.datetime.now()))
+            print(request)
+            print(output)
 
 if __name__ == '__main__':
 
