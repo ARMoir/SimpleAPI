@@ -64,37 +64,43 @@ def default(config, api, response):
     return output
 
 def time(items):   
-    time = {}
-    time['timestamp'] = str(datetime.datetime.now())
-    time = json.dumps(time)
+    values = {}
+    values[items[1]] = str(datetime.datetime.now())
+    output = json.dumps(values)
 
-    return time
+    return output
 
 def insert(config, items):
     items = database.sanitize(items)
     output = database.create(config)
+    values = {}
 
-    if len(items) < 4:
-        output = 'Please provide the key and value to insert <br> http://{0}/insert/{{key}}/{{value}}'.format(config.data['Host'])
+    if len(items) < 4 or '' is items[2] or '' is items[3]:
+        values['error'] = 'provide key and value to insert'
+        values['format'] = 'http://{0}/insert/{{key}}/{{value}}'.format(config.data['Host'])
 
     else:
         timestamp = datetime.datetime.now() 
         time = timestamp.strftime('%Y%m%d%H%M%S%f')
-        output = database.set(config.database, "INSERT INTO [{0}] VALUES ('{1}','{2}','{3}')".format('values', time, items[2], items[3]))
+        values['inserted'] = database.set(config.database, "INSERT INTO [{0}] VALUES ('{1}','{2}','{3}')".format('values', time, items[2], items[3]))
+
+    output = json.dumps(values)
 
     return output
 
 def query(config, items):
     items = database.sanitize(items)
     output = database.create(config)
+    values = {}
 
-    if len(items) < 3:
-        output = 'Please provide the key value to query <br> http://{0}/insert/{{key}}'.format(config.data['Host'])
+    if len(items) < 3 or '' is items[2]:
+        values['error'] = 'provide key value to query'
+        values['format'] = 'http://{0}/query/{{key}}'.format(config.data['Host'])
 
     else:
-        output = database.get(config.database, "SELECT [{0}] FROM [{1}] WHERE [{2}] = '{3}' ORDER BY [{4}] DESC".format('value', 'values', 'key', items[2], 'time'))
-        values = {}
-        values[items[2]] = list(sum(output, ()))
-        output = json.dumps(values)
+        output = database.get(config.database, "SELECT [{0}] FROM [{1}] WHERE [{2}] = '{3}' ORDER BY [{4}] DESC LIMIT 1".format('value', 'values', 'key', items[2], 'time'))       
+        values[items[2]] = output[0][0].replace('%20', ' ')
+    
+    output = json.dumps(values)
 
     return output
