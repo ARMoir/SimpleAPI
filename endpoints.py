@@ -9,7 +9,7 @@ def get(reponse):
         get = get.split('HTTP')
         get = get[0].replace('GET','').strip()
 
-    except Exception as error:
+    except Exception:
         get = ''
     
     finally:
@@ -76,7 +76,7 @@ def insert(config, items):
     values = {}
 
     if len(items) < 4 or '' is items[2] or '' is items[3]:
-        values['error'] = 'provide key and value to insert'
+        values['error'] = 'missing key and value to insert'
         values['format'] = 'http://{0}/insert/{{key}}/{{value}}'.format(config.data['Host'])
 
     else:
@@ -94,7 +94,7 @@ def query(config, items):
     values = {}
 
     if len(items) < 3 or '' is items[2]:
-        values['error'] = 'provide key value to query'
+        values['error'] = 'missing key value to query'
         values['format'] = 'http://{0}/query/{{key}}'.format(config.data['Host'])
 
     else:

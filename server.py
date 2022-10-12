@@ -10,7 +10,6 @@ def connect(config):
         serversocket.bind((config.ip, config.port))
         serversocket.listen(0)
 
-
         connection, address = serversocket.accept()
         connection.settimeout(config.timeout)
 
@@ -25,7 +24,7 @@ def connect(config):
             print(error)
 
     finally:
-
+        config.data['address'] = address
         config.connection = connection
 
         return buffer
